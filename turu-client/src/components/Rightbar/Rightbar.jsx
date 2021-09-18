@@ -2,10 +2,11 @@ import './rightbar.css'
 import { Users } from '../../dummyData'
 import Online from '../Online/Online'
 
-export default function Rightbar() {
-    return (
-        <div className="rightbar">
-            <div className="rightbarWrapper">
+export default function Rightbar({ profile }) {
+    
+    const HomeRightbar = () => {
+        return (
+            <>
                 <div className="birthdayContainer">
                     <img src="/assets/gift.png" alt="" className="birthdayImg" />
                     <span className="birthdayText"><b>Budi Dekil</b> and <b>4 other friends</b> have birthday today!</span>
@@ -19,6 +20,63 @@ export default function Rightbar() {
                         ))
                     }
                 </ul>
+            </>
+        )
+    }
+
+    const ProfileRightbar = () => {
+        return (
+            <>
+                <h4 className="rightbarTitle">User Informations</h4>
+                <div className="rightbarInfo">
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">City:</span>
+                        <span className="rightbarInfoValue">Depok</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">From:</span>
+                        <span className="rightbarInfoValue">Bogor</span>
+                    </div>
+                    <div className="rightbarInfoItem">
+                        <span className="rightbarInfoKey">Relationship:</span>
+                        <span className="rightbarInfoValue">Single</span>
+                    </div>
+                </div>
+                <h4 className="rightbarTitle">User Friends</h4>
+                <div className="rightbarFollowings">
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                    <div className="rightbarFollowing">
+                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <span className="rightbarFollowingName">Budi Dekil</span>
+                    </div>
+                </div>
+            </>
+        )
+    }
+
+    return (
+        <div className="rightbar">
+            <div className="rightbarWrapper">
+                { profile ? <ProfileRightbar /> : <HomeRightbar /> }
             </div>
         </div>
     )
