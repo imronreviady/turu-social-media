@@ -10,7 +10,7 @@
 }
 
 .topbarLeft {
-	z-index: 3;
+	flex: 3;
 }
 
 .logo {
@@ -62,7 +62,7 @@
 	cursor: pointer;
 }
 
-.topbarIcon {
+.topbarIcons {
 	display: flex;
 }
 
