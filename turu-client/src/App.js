@@ -23,11 +23,7 @@ function App() {
 				</Route>
 				<Route path="/profile/:username" component={Profile} />
 				<Route path="/login">
-					{user ? (
-						<Redirect to={`/profile/${user.username}`} />
-					) : (
-						<Login />
-					)}
+					{user ? <Redirect to="/" /> : <Login />}
 				</Route>
 				<Route path="/register">
 					{user ? (
