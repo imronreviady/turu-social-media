@@ -3,15 +3,16 @@ import { Users } from '../../dummyData'
 import Online from '../Online/Online'
 
 export default function Rightbar({ user }) {
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     
     const HomeRightbar = () => {
         return (
             <>
                 <div className="birthdayContainer">
-                    <img src="/assets/gift.png" alt="" className="birthdayImg" />
+                    <img src="/images/gift.png" alt="" className="birthdayImg" />
                     <span className="birthdayText"><b>Budi Dekil</b> and <b>4 other friends</b> have birthday today!</span>
                 </div>
-                <img src="/assets/ad.png" alt="" className="rightbarAd" />
+                <img src="/images/ad.png" alt="" className="rightbarAd" />
                 <h4 className="rightbarTitle">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {
@@ -45,27 +46,27 @@ export default function Rightbar({ user }) {
                 <h4 className="rightbarTitle">User Friends</h4>
                 <div className="rightbarFollowings">
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                     <div className="rightbarFollowing">
-                        <img src="/assets/person/2.jpeg" alt="" className="rightbarFollowingImg" />
+                        <img src="/images/person/2.jpeg" alt="" className="rightbarFollowingImg" />
                         <span className="rightbarFollowingName">Budi Dekil</span>
                     </div>
                 </div>

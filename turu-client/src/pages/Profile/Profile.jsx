@@ -10,6 +10,7 @@ import { useParams } from 'react-router'
 export default function Profile() {
     const [user, setUser] = useState({})
     const username = useParams().username
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     useEffect(() => {
         const fatchUser = async () => {
@@ -27,8 +28,12 @@ export default function Profile() {
                 <div className="profileRight">
                     <div className="profileRightTop">
                         <div className="profileCover">
-                            <img src={`/assets/${user.profileCover || "person/noCover.png"}`} alt="" className="profileCoverImg" />
-                            <img src={`/assets/${user.profilePicture || "person/noAvatar.png"}`} alt="" className="profileUserImg" />
+                            <img
+                                src={user.profileCover ? PF + user.profileCover : PF + "person/noCover.png"}
+                                alt="" className="profileCoverImg" />
+                            <img
+                                src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
+                                alt="" className="profileUserImg" />
                         </div>
                         <div className="profileInfo">
                             <h4 className="profileInfoName">{ user.username }</h4>

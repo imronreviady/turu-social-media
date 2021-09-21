@@ -2,14 +2,22 @@ import { Link } from 'react-router-dom'
 import { MoreVert } from '@material-ui/icons'
 import './post.css'
 //import { Users } from '../../dummyData'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { format } from 'timeago.js'
+import { AuthContext } from '../../context/AuthContext'
 
 export default function Post({ post }) {
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [user, setUser] = useState({})
+    const { user: currentUser } = useContext(AuthContext)
+
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    useEffect(() => {
+        setIsLiked(post.likes.includes(currentUser._id))
+    }, [currentUser._id, post.likes])
 
     useEffect(() => {
         const fatchUser = async () => {
@@ -20,6 +28,11 @@ export default function Post({ post }) {
     }, [post.userId]);
 
     const likeHandler = () => {
+        try {
+            axios.put(`/api/posts/${post._id}/like`, {userId: currentUser._id})
+        } catch (error) {
+            
+        }
         setLike(isLiked ? like - 1 : like + 1)
         setIsLiked(!isLiked)
     }
@@ -30,9 +43,13 @@ export default function Post({ post }) {
                 <div className="postTop">
                     <div className="postTopLeft">
                         <Link to={`/profile/${user.username}`}>
-                            <img src={`/assets/${user.profilePicture || "person/noAvatar.png"}`} alt="" className="postProfileImg" />
+                            <img
+                                src={user.profilePicture ? PF + user.profilePicture : PF + "person/noAvatar.png"}
+                                alt="" className="postProfileImg" />
                         </Link>
-                        <Link to={`/profile/${user.username}`} style={{ textDecoration: "none" }}>
+                        <Link
+                            to={`/profile/${user.username}`}
+                            style={{ textDecoration: "none" }}>
                             <span className="postUsername">{user.username}</span>
                         </Link>
                         <span className="postDate">{ format(post.createdAt) }</span>
@@ -43,18 +60,18 @@ export default function Post({ post }) {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{ post?.desc }</span>
-                    <img src={`/assets/${post?.img}`} alt="" className="postImg" />
+                    <img src={post.img ? PF + post.img : ""} alt="" className="postImg" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
                         <img
-                            src="/assets/like.png"
+                            src="/images/like.png"
                             alt=""
                             className="likeIcon"
                             onClick={likeHandler}
                         />
                         <img
-                            src="/assets/heart.png"
+                            src="/images/heart.png"
                             alt=""
                             className="likeIcon"
                             onClick={likeHandler}
