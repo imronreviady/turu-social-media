@@ -6,14 +6,46 @@ import ChatOnline from "../../components/ChatOnline/ChatOnline";
 import { useContext, useEffect, useRef, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import axios from "axios";
+import { io } from "socket.io-client";
 
 export default function Messenger() {
 	const [conversations, setConversations] = useState([]);
 	const [currentChat, setCurrentChat] = useState(null);
 	const [messages, setMessages] = useState([]);
 	const [newMessages, setNewMessages] = useState("");
+	const [arrivalMessages, setArrivalMessages] = useState(null);
+	const [onlineUsers, setOnlineUsers] = useState([]);
+
 	const { user } = useContext(AuthContext);
 	const scrollRef = useRef();
+	const socket = useRef();
+
+	useEffect(() => {
+		socket.current = io("ws://localhost:8900");
+
+		socket.current.on("getMessage", (data) => {
+			setArrivalMessages({
+				sender: data.senderId,
+				text: data.text,
+				createdAt: Date.now(),
+			});
+		});
+	}, []);
+
+	useEffect(() => {
+		arrivalMessages &&
+			currentChat?.members.includes(arrivalMessages.sender) &&
+			setMessages((prev) => [...prev, arrivalMessages]);
+	}, [arrivalMessages, currentChat]);
+
+	useEffect(() => {
+		socket.current.emit("addUser", user._id);
+		socket.current.on("getUsers", (users) => {
+			setOnlineUsers(
+				user.followings.filter((f) => users.some((u) => u.userId === f))
+			);
+		});
+	}, [user]);
 
 	useEffect(() => {
 		const getConversations = async () => {
@@ -48,6 +80,16 @@ export default function Messenger() {
 			text: newMessages,
 			conversationId: currentChat._id,
 		};
+
+		const receiverId = currentChat.members.find(
+			(member) => member !== user._id
+		);
+
+		socket.current.emit("sendMessage", {
+			senderId: user._id,
+			receiverId,
+			text: newMessages,
+		});
 
 		try {
 			const res = await axios.post("/api/messages", message);
@@ -126,7 +168,11 @@ export default function Messenger() {
 				</div>
 				<div className="chatOnline">
 					<div className="chatOnlineWrapper">
-						<ChatOnline />
+						<ChatOnline
+							onlineUsers={onlineUsers}
+							currentId={user._id}
+							setCurrentChat={setCurrentChat}
+						/>
 					</div>
 				</div>
 			</div>
